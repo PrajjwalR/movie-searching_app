@@ -10,7 +10,7 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
-  const API_URL = 'http://www.omdbapi.com/';
+  const API_URL = 'https://www.omdbapi.com/';
   const API_KEY = '3da249cb';
 
   useEffect(() => {
