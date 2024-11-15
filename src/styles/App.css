@@ -94,7 +94,7 @@ body {
   background-color: #f0f0f0;
 }
 
-/* Movie Grid */
+/* Movie */
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
