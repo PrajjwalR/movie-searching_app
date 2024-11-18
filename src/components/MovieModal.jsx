@@ -1,26 +1,16 @@
-import '../styles/App.css'; 
+import '../styles/App.css';
 
 const MovieModal = ({ movie, onClose }) => {
-  if (!movie) return null; 
-  console.log(movie)
+  if (!movie) return null;
 
   return (
-    <div className="modal-overlay">
+    <div className="modal-overlay" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
       <div className="modal-content">
-        <button className="close-button" onClick={onClose}>X</button>
-        <h2>{movie.Title} ({movie.Year})</h2>
-        <div className="movie-details">
-          <img
-            src={movie.Poster}
-            alt={movie.Title}
-            className="modal-poster"
-          />
-          <div className="movie-info">
-            <p><strong>Type:</strong> {movie.Type}</p>
-            <p><strong>Year:</strong> {movie.Year}</p>
-            <p><strong>Ratings:</strong> {movie.imdbID} / 10</p>
-         
-          </div>
+        <button className="close-button" onClick={onClose} aria-label="Close Modal">X</button>
+        <h2 id="modal-title">{movie.Title} ({movie.Year})</h2>
+        <div id="modal-description">
+          <p><strong>Type:</strong> {movie.Type}</p>
+          <p><strong>Year:</strong> {movie.Year}</p>
         </div>
       </div>
     </div>

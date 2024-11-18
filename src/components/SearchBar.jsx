@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import '../styles/App.css'; 
+import '../styles/App.css';
 
 const SearchBar = ({ onSearch }) => {
   const [query, setQuery] = useState('');
@@ -13,34 +13,29 @@ const SearchBar = ({ onSearch }) => {
   const API_KEY = '3da249cb';
 
   useEffect(() => {
-    // Trigger live suggestions
     const fetchSuggestions = async () => {
       if (!query) {
         setSuggestions([]);
         return;
       }
-
       setLoading(true);
       setError(null);
-
       try {
         const response = await axios.get(`${API_URL}?s=${query}&apikey=${API_KEY}`);
         if (response.data.Response === 'True') {
-          setSuggestions(response.data.Search.slice(0, 5)); 
+          setSuggestions(response.data.Search.slice(0, 5));
         } else {
           setSuggestions([]);
-          setError(response.data.Error); // Handle error
+          setError(response.data.Error);
         }
-      } catch (err) {
+      } catch {
         setError('Failed to fetch suggestions. Please try again.');
-        console.error(err);
       } finally {
         setLoading(false);
       }
     };
-
-    const debounceTimer = setTimeout(fetchSuggestions, 300); 
-    return () => clearTimeout(debounceTimer); 
+    const debounceTimer = setTimeout(fetchSuggestions, 300);
+    return () => clearTimeout(debounceTimer);
   }, [query]);
 
   const handleSearchClick = async () => {
@@ -48,28 +43,25 @@ const SearchBar = ({ onSearch }) => {
       setError('Please enter a movie name.');
       return;
     }
-
     setLoading(true);
     setError(null);
-
     try {
       const response = await axios.get(`${API_URL}?s=${query}&apikey=${API_KEY}`);
       if (response.data.Response === 'True') {
-        onSearch(response.data.Search); 
-        setSuggestions([]); // Clear suggestions
+        onSearch(response.data.Search);
+        setSuggestions([]);
       } else {
         setError(response.data.Error);
       }
-    } catch (err) {
+    } catch {
       setError('Failed to fetch movies. Please try again.');
-      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
   const handleSelectSuggestion = (movie) => {
-    setQuery(movie.Title); 
+    setQuery(movie.Title);
     onSearch([movie]);
     setSuggestions([]);
   };
@@ -83,6 +75,7 @@ const SearchBar = ({ onSearch }) => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="search-input"
+          aria-label="Search movies"
         />
         <button
           onClick={handleSearchClick}
